@@ -30,17 +30,18 @@ import cn.ac.ict.mediaplayer.MediaPlayerService.MyBinder;
 
 public class MainActivity extends ActionBarActivity {
     private final String TAG = "MainActivity";
+    private final String bgColor = "#BFEEBF";
     private ListView listView1;
     private SeekBar seekBar1;
     private Button buttonMiddle;
     private Button buttonPrevOne;
-    private Button buttonNextOne;
 
+    private Button buttonNextOne;
     private String musicDirectory;
+
     private String[] musicNames;
 
     private int curPosition = -1;// cur playing position
-
     private SeekBarThread seekBarThread;// for change seekBar
     private Handler seekBarHandler;// for change seekBar
     private Handler uiHandler;// when music is completed,set ui to change
@@ -123,7 +124,7 @@ public class MainActivity extends ActionBarActivity {
         int index = getCurPositionInListView();
         Log.i(TAG, "index:" + index);
         View view = listView1.getChildAt(index);
-        view.setBackgroundColor(Color.BLUE);
+        view.setBackgroundColor(Color.parseColor(bgColor));
         String name = musicNames[curPosition];
         File file = new File(musicDirectory, name);
         Uri uri = Uri.fromFile(file);
@@ -338,7 +339,7 @@ public class MainActivity extends ActionBarActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
             if (position == curPosition) {
-                view.setBackgroundColor(Color.BLUE);
+                view.setBackgroundColor(Color.parseColor(bgColor));
             } else {
                 view.setBackgroundColor(Color.TRANSPARENT);
             }

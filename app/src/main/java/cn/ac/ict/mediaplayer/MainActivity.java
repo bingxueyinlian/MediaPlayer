@@ -11,12 +11,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,8 +27,8 @@ import java.io.FilenameFilter;
 
 import cn.ac.ict.mediaplayer.MediaPlayerService.MyBinder;
 
-public class MainActivity extends ActionBarActivity {
-    private final String TAG = "MainActivity";
+public class MainActivity extends AppCompatActivity {
+    private final String TAG = MainActivity.class.getSimpleName();
     private final String bgColor = "#BFEEBF";
     private ListView listView1;
     private SeekBar seekBar1;
@@ -92,6 +91,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void initListView() {
+        if (musicNames == null) musicNames = new String[0];
         ArrayAdapter<String> adapter = new MyArrayAdapter<>(this, R.layout.textview, musicNames);
         listView1.setAdapter(adapter);
         listView1.setOnItemClickListener(new ListViewItemClickListener());
@@ -161,6 +161,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClickEvent(View button) {
+        if (musicNames == null || musicNames.length == 0) return;
+
         if (button.getId() == buttonMiddle.getId()) {// buttonMiddle
             buttonMiddleClick();
         } else if (button.getId() == buttonPrevOne.getId()) {// buttonPrevOne
@@ -301,7 +303,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    class ListViewItemClickListener implements OnItemClickListener {
+    class ListViewItemClickListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
